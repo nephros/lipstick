@@ -103,6 +103,9 @@ public:
     bool openUrl(WaylandClient *client, const QUrl &url) Q_DECL_OVERRIDE;
     void retainedSelectionReceived(QMimeData *mimeData) Q_DECL_OVERRIDE;
 
+    void glitter(const float &rscale, const float &gscale, const float &bscale);
+    void glitter(const QString &name);
+
     int windowCount() const;
     int ghostWindowCount() const;
 

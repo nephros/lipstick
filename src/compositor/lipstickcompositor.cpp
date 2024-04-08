@@ -206,7 +206,42 @@ void LipstickCompositor::componentComplete()
     m_output.setPhysicalSize(screen->physicalSize().toSize());
 #else
     QWaylandCompositor::setOutputGeometry(QRect(0, 0, width(), height()));
+    LipstickCompositor::glitter("default");
 #endif
+}
+
+// we already put lipstick on a pig, let's add some glitter:
+void LipstickCompositor::glitter(const QString &name)
+{
+    const QMap<QString, QList<float>> map = {
+        { "default"          , { 1.00, 1.00, 1.00 } },
+        { "Morning"          , { 1.00, 0.95, 0.85 } },
+        { "Late Morning"     , { 0.98, 0.90, 0.80 } },
+        { "Early Afternoon"  , { 0.95, 0.85, 0.75 } },
+        { "Late Afternoon"   , { 0.90, 0.80, 0.70 } },
+        { "Early Evening"    , { 1.00, 0.80, 0.70 } },
+        { "Late Evening"     , { 0.95, 0.75, 0.65 } },
+        { "Night"            , { 0.90, 0.70, 0.60 } },
+    };
+    QList<float> values = map[name];
+    if (name.isEmpty() || values.isEmpty()) {
+        glitter(1.0, 1.0, 1.0);
+    } else {
+        glitter(values[0], values[1], values[3]);
+    }
+}
+
+void LipstickCompositor::glitter(const float &rscale=1.0, const float &gscale=1.0, const float &bscale=1.0)
+{
+
+    // Create a custom color transform that shifts the colors
+    QColorProfile inputProfile  = QColorProfile::sRGB();
+    QColorProfile outputProfile = QColorProfile::sRGB();
+    QMatrix4x4 matrix;
+    matrix.scale(rscale, gscale, bscale);
+
+    QColorTransform *glitter = new QColorTransform transform(inputProfile, outputProfile, matrix);
+    m_output->setColorCorrection(glitter);
 }
 
 void LipstickCompositor::surfaceCreated(QWaylandSurface *surface)
