@@ -234,13 +234,19 @@ void LipstickCompositor::glitter(const QString &name)
 void LipstickCompositor::glitter(const float &rscale=1.0, const float &gscale=1.0, const float &bscale=1.0)
 {
 
-    // Create a custom color transform that shifts the colors
-    QColorProfile inputProfile  = QColorProfile::sRGB();
-    QColorProfile outputProfile = QColorProfile::sRGB();
-    QMatrix4x4 matrix;
+    QMatrix4x4 colorMatrix;
     matrix.scale(rscale, gscale, bscale);
 
-    QColorTransform *glitter = new QColorTransform transform(inputProfile, outputProfile, matrix);
+    //QColorTransform *glitter = new QColorTransform transform(inputProfile, outputProfile, matrix);
+    // applyMatrix(QColorVector *buffer, const qsizetype len, const QColorMatrix &)
+    // see https://codebrowser.dev/qt5/qtbase/src/gui/painting/qcolortransform.cpp.html
+    QVector3D glitter;
+    for (int j = 0; j < glitter.length(); ++j) {
+        const QVector3D cv = colorMatrix.map(glitter[j]);
+        glitter[j].x = std::max(0.0f, std::min(1.0f, cv.x));
+        glitter[j].y = std::max(0.0f, std::min(1.0f, cv.y));
+        glitter[j].z = std::max(0.0f, std::min(1.0f, cv.z));
+    }
     m_output->setColorCorrection(glitter);
 }
 
