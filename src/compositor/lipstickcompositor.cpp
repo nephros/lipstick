@@ -19,6 +19,7 @@
 #include <QtSensors/QOrientationSensor>
 #include <QClipboard>
 #include <QMimeData>
+#include <QMatrix4x4>
 #include <QtGui/qpa/qplatformnativeinterface.h>
 #include <qpa/qwindowsysteminterface.h>
 #include <private/qguiapplication_p.h>
