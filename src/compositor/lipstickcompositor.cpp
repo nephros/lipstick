@@ -227,7 +227,7 @@ void LipstickCompositor::glitter(const QString &name)
     if (name.isEmpty() || values.isEmpty()) {
         glitter(1.0, 1.0, 1.0);
     } else {
-        glitter(values[0], values[1], values[3]);
+        glitter(values[0], values[1], values[2]);
     }
 }
 
