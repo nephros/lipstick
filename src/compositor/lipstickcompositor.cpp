@@ -42,6 +42,7 @@
 #include "lipsticksettings.h"
 #include "lipstickrecorder.h"
 #include "alienmanager/alienmanager.h"
+#include "xdgshell/xdgshell.h"
 #include "logging.h"
 
 LipstickCompositor *LipstickCompositor::m_instance = 0;
@@ -105,6 +106,7 @@ LipstickCompositor::LipstickCompositor()
     m_recorder = new LipstickRecorderManager;
     addGlobalInterface(m_recorder);
     addGlobalInterface(new AlienManagerGlobal);
+    addGlobalInterface(new XdgShellGlobal);
 
     QObject::connect(m_mceNameOwner, &QMceNameOwner::validChanged,
                      this, &LipstickCompositor::processQueuedSetUpdatesEnabledCalls);

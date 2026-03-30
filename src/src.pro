@@ -26,6 +26,7 @@ INCLUDEPATH += utilities touchscreen components xtools 3rdparty devicestate
 
 include(compositor/compositor.pri)
 include(compositor/alienmanager/alienmanager.pri)
+include(compositor/xdgshell/xdgshell.pri)
 
 PUBLICHEADERS += \
     utilities/qobjectlistmodel.h \
