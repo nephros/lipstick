@@ -198,7 +198,6 @@ signals:
 private slots:
     void surfaceMapped();
     void surfaceUnmapped();
-    void surfaceSizeChanged();
     void surfaceTitleChanged();
     void surfaceRaised();
     void surfaceLowered();
